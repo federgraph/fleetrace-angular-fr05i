@@ -1,0 +1,7 @@
+<div class="button-row">
+  <button mat-button>Race</button>
+  <button mat-raised-button (click)=click(1)>1</button>
+  <ng-container *ngFor="let number of numbers">
+    <button mat-raised-button (click)=click(number)>{{number}}</button>
+  </ng-container>
+</div>
