@@ -32,7 +32,7 @@ You may also prefer to use hard coded parameters and not ask the server.
 - If connected these messages will go out to the server.
 - There will be a bib button for every entry in the race/event.
 - The color of these bib buttons can be pink or blue.
-- Click on a pink to generate a message.
+- Click on a pink bib to generate a message.
 - A message will be generated and the button will turn blue.
 - Blue buttons are buttons for used bibs.
 - Bibs are bows (bow numbers) in the sport of sailing.
@@ -70,13 +70,13 @@ So that is why sometimes two messages will be generated and sent.
 ### 4. About SimpleText
 
 SimpleText is not used here. It can be removed.
-But you could add another button to download and process current event data from the server. See jsonBtnClick() in app.moduld.ts.
+But you could add another button to download and process current event data from the server. See jsonBtnClick() in app.module.ts.
 
 ## Build for Delphi or Node
 
 For Delphi or Node we use the `/frac/` base-href.
 Run `npm run build-fr` to build the project.
-This will build using the hardcoded base-href.
+This will build using the hard-coded base-href.
 The build artifacts will be stored in the `dist/` directory.
 
 - In the ini file of the Delphi application you need to specify the location of the dist folder.
