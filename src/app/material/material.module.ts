@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatInputModule,
-  MatOptionModule,
-  MatRadioModule,
-  } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({

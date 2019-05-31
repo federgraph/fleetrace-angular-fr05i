@@ -13,9 +13,9 @@ import { TimingButtonsComponent } from './timing-buttons/timing-buttons.componen
 })
 export class AppComponent implements OnInit {
 
-    @ViewChild(ConnectionControlComponent) connectionControl: ConnectionControlComponent;
+    @ViewChild(ConnectionControlComponent, { static: true })connectionControl: ConnectionControlComponent;
 
-    @ViewChild('timingTab')
+    @ViewChild('timingTab', { static: true })
     timingTab: TimingButtonsComponent;
 
     auto = true;
