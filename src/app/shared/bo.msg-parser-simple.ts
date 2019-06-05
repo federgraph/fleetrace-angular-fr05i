@@ -148,10 +148,11 @@ export class TMsgParser2 {
                 return `EP.Name=${this.EventName}`;
 
             case TMsgType.mtInputMode:
-                if (this.InputMode)
+                if (this.InputMode) {
                     return 'EP.IM=Strict';
-                else
+                } else {
                     return 'EP.IM=Relaxed';
+                }
 
             case TMsgType.mtQU:
                 return `FR.*.W${this.Race}.Bib${this.Bib}.QU=${this.sQU}`;
@@ -182,8 +183,7 @@ export class TMsgParser2 {
         const i = s.indexOf('=');
         if (i > -1) {
             return s.substring(0, i).trim() + '=' + s.substring(i + 1, s.length).trim();
-        }
-        else {
+        } else {
             return s.trim();
         }
     }
@@ -207,25 +207,31 @@ export class TMsgParser2 {
 
     StrToIntDef(value: string, defaultResult: number): number {
         let i = Number.parseInt(value, 10);
-        if (Number.isNaN(i))
+        if (Number.isNaN(i)) {
             i = defaultResult;
+        }
         return i;
     }
 
     retrieveGroupMatch(mc: RegExpMatchArray): number {
         this.gc = 0;
-        if (!mc)
+        if (!mc) {
             return 0;
+        }
         if (mc.length > 0) {
             this.gc = mc.length;
-            if (this.gc > 4)
+            if (this.gc > 4) {
                 this.g4 = mc[4];
-            if (this.gc > 3)
+            }
+            if (this.gc > 3) {
                 this.g3 = mc[3];
-            if (this.gc > 2)
+            }
+            if (this.gc > 2) {
                 this.g2 = mc[2];
-            if (this.gc > 1)
+            }
+            if (this.gc > 1) {
                 this.g1 = mc[1];
+        }
         }
         return this.gc;
     }

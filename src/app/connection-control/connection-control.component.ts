@@ -18,13 +18,13 @@ enum AmpelColor {
 })
 export class ConnectionControlComponent {
 
-    private _connected = false;
+    private isConnected = false;
     led: AmpelColor = AmpelColor.yellow;
-    ledColor = "red";
+    ledColor = 'red';
 
-    dataMsg = "";
-    errorMsg = "";
-    flashMsg = "";
+    dataMsg = '';
+    errorMsg = '';
+    flashMsg = '';
 
     @Output() paramsChanged: EventEmitter<EventParams> = new EventEmitter();
 
@@ -41,8 +41,8 @@ export class ConnectionControlComponent {
     }
 
     updateFlash(s: string) {
-        this.dataMsg = "";
-        this.errorMsg = "";
+        this.dataMsg = '';
+        this.errorMsg = '';
         this.flashMsg = s;
     }
 
@@ -90,10 +90,10 @@ export class ConnectionControlComponent {
                     this.eventParams.startlistCount = data.startlistCount;
                     this.paramsChanged.emit(this.eventParams);
                     this.led = AmpelColor.green;
-                    this.setConnected(true);    
-                }
-                else
+                    this.setConnected(true);
+                } else {
                     this.dataMsg = 'please check response for querParams';
+                }
             },
             err => this.handleError(err)
         );
@@ -103,10 +103,11 @@ export class ConnectionControlComponent {
         this.updateFlash('clear');
         this.apiService.manageClear().subscribe(
             (res) => {
-                if (res)
+                if (res) {
                     this.dataMsg = res;
-                else
+                } else {
                     this.dataMsg = 'please check response for clear';
+                }
             },
             err => this.handleError(err)
         );
@@ -117,12 +118,11 @@ export class ConnectionControlComponent {
         this.apiService.getConnectionStatus().subscribe(
             (data) => {
                 if (data.connected) {
-                    this.dataMsg = "connected";
+                    this.dataMsg = 'connected';
                     this.led = AmpelColor.green;
                     this.setConnected(true);
-                }
-                else {
-                    this.dataMsg = "not connected";
+                } else {
+                    this.dataMsg = 'not connected';
                     this.led = AmpelColor.red;
                     this.setConnected(false);
                 }
@@ -133,30 +133,33 @@ export class ConnectionControlComponent {
 
     updateLEDColor(): void {
         switch (this.led) {
-            case AmpelColor.white: this.ledColor = "white"; break;
-            case AmpelColor.red: this.ledColor = "red"; break;
-            case AmpelColor.yellow: this.ledColor = "yellow"; break;
-            case AmpelColor.green: this.ledColor = "lime"; break;
-            default: this.ledColor = "gray"; break;
+            case AmpelColor.white: this.ledColor = 'white'; break;
+            case AmpelColor.red: this.ledColor = 'red'; break;
+            case AmpelColor.yellow: this.ledColor = 'yellow'; break;
+            case AmpelColor.green: this.ledColor = 'lime'; break;
+            default: this.ledColor = 'gray'; break;
         }
     }
 
     getConnected(): boolean {
-        return this._connected;
+        return this.isConnected;
     }
 
     setConnected(value: boolean) {
-        this._connected = value;
+        this.isConnected = value;
         this.updateLEDColor();
     }
 
     logBtnClick() {
-        if (this.dataMsg !== '')
+        if (this.dataMsg !== '') {
             console.log('dataMsg = ' + this.dataMsg);
-        if (this.errorMsg !== '')
+        }
+        if (this.errorMsg !== '') {
             console.log('errorMsg = ' + this.errorMsg);
-        if (this.flashMsg !== '')
+        }
+        if (this.flashMsg !== '') {
             console.log('flashMsg = ' + this.flashMsg);
+        }
     }
 
     superClear() {

@@ -8,21 +8,20 @@ import { TBOManager, TCollectionItem } from '../shared/bo.service';
     styleUrls: ['./timing-buttons.component.css']
 })
 export class TimingButtonsComponent implements OnInit {
-    _ba: Array<number> = [];
-    
-    _race = 1;
-    _timepoint = 0;
+    fBA: Array<number> = [];
 
-    get race(): number { return this._race; } 
-    get timepoint(): number { return this._timepoint; } 
+    fRace = 1;
+    fTimepoint = 0;
 
+    get race(): number { return this.fRace; }
     @Input() set race(value: number) {
-        this._race = value;
+        this.fRace = value;
         this.update();
     }
 
+    get timepoint(): number { return this.fTimepoint; }
     @Input() set timepoint(value: number)  {
-        this._timepoint = value;
+        this.fTimepoint = value;
         this.update();
     }
 
@@ -30,7 +29,7 @@ export class TimingButtonsComponent implements OnInit {
 
     @Output() timeReceived: EventEmitter<TimingParams> = new EventEmitter();
     @Output() timeCancelled: EventEmitter<TimingParams> = new EventEmitter();
-   
+
     BowTupples: Array<[number, boolean]>;
     Bows: Array<number> = [];
     Bibs: Array<number> = [];
@@ -51,7 +50,7 @@ export class TimingButtonsComponent implements OnInit {
             tp: this.timepoint,
             bib: bow
         };
-        
+
         this.timeCancelled.emit(t);
     }
 
@@ -61,32 +60,34 @@ export class TimingButtonsComponent implements OnInit {
             tp: this.timepoint,
             bib: bow
         };
-        
+
         this.timeReceived.emit(t);
 
         let iob: number;
         if (this.auto) {
 
-            //bib and/or bow  may have already been removed (by timeReceived event)
+            // bib and/or bow  may have already been removed (by timeReceived event)
 
             iob = this.Bibs.indexOf(bow);
-            if (iob > -1)
+            if (iob > -1) {
               this.Bibs.splice(iob, 1);
+            }
 
             iob = this.Bows.indexOf(bow);
-            if (iob > -1)
+            if (iob > -1) {
               this.Bows.splice(iob, 1);
+            }
 
             this.buildBowTupples();
             this.countShown = this.Bibs.length;
         }
     }
-  
+
     hide() {
         this.autoShow = false;
         this.clear();
     }
-    
+
     show() {
         this.autoShow = true;
         this.fill();
@@ -101,22 +102,24 @@ export class TimingButtonsComponent implements OnInit {
         this.Bows = this.Bibs.slice();
         this.buildBowTupples();
     }
-    
+
     toggle() {
-        if (this.Bows.length > 0)
+        if (this.Bows.length > 0) {
             this.hide();
-        else
+        } else {
             this.show();
+        }
     }
 
     update() {
         this.updateFromTimePoint();
         this.filterOutFinishedBibs();
         this.countShown = this.Bibs.length;
-        if (this.autoShow)
+        if (this.autoShow) {
             this.fill();
-        else
+        } else {
             this.clear();
+        }
     }
 
     updateFromEvent() {
@@ -126,8 +129,7 @@ export class TimingButtonsComponent implements OnInit {
 
         const cl = this.BOManager.BO.CollectionItems;
         let cr: TCollectionItem;
-        for (let i = 0; i < cl.length; i++) {
-            cr = cl[i];
+        for (cr of cl) {
             const bib = cr.Bib;
             const re = cr.Race[r];
             if (re.OTime === 0 && re.IsOK) {
@@ -147,38 +149,34 @@ export class TimingButtonsComponent implements OnInit {
     filterOutFinishedBibs() {
         const ba: Array<number> = [];
 
-        const r = this.check_r(this._race);
+        const r = this.check_r(this.fRace);
 
         const cl = this.BOManager.BO.CollectionItems;
         let cr: TCollectionItem;
-        for (let i = 0; i < cl.length; i++) {
-            cr = cl[i];
+        for (cr of cl) {
             const bib = cr.Bib;
             const re = cr.Race[r];
             if (re.OTime !== 0) {
                 ba.push(bib);
             }
         }
-    
-        this.Bibs = this.Bibs.filter( function( el ) {
-            return ba.indexOf( el ) < 0;
-        });        
+
+        this.Bibs = this.Bibs.filter(el => ba.indexOf(el) < 0);
     }
-    
+
     /**
      * Used in FR01 (event only app, there is no race timing included)
      */
     updateFromTimePoint() {
         const ba: Array<number> = [];
-        let r = this._race;
-        const t = this._timepoint;
+        let r = this.fRace;
+        const t = this.fTimepoint;
 
         r = this.check_r(r);
-                   
+
         const cl = this.BOManager.BO.CollectionItems;
         let cr: TCollectionItem;
-        for (let i = 0; i < cl.length; i++) {
-            cr = cl[i];
+        for (cr of cl) {
             const bib = cr.Bib;
             const re = cr.Race[r];
             const tp = re.IT[t];
@@ -189,7 +187,7 @@ export class TimingButtonsComponent implements OnInit {
 
         this.Bibs = ba;
     }
- 
+
     buildBowTupples() {
         let bt: [number, boolean];
         const bts: Array<[number, boolean]> = [];
@@ -197,19 +195,21 @@ export class TimingButtonsComponent implements OnInit {
         const l = this.BOManager.BO.StartlistCount;
 
         for (let i = 1; i <= l; i++) {
-            if (this.Bibs.includes(i))
+            if (this.Bibs.includes(i)) {
                 bt = [i, true];
-            else
+            } else {
                 bt = [i, false];
+            }
             bts.push(bt);
         }
 
         this.BowTupples = bts;
     }
- 
+
     check_r(r: number): number {
-        if (r > this.BOManager.BO.RaceCount)
+        if (r > this.BOManager.BO.RaceCount) {
             r = this.BOManager.BO.RaceCount;
+        }
         return r;
     }
 }

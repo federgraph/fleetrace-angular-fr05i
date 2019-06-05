@@ -1,4 +1,4 @@
-﻿ import { Component, ViewChild, OnInit } from '@angular/core';
+﻿import { Component, ViewChild, OnInit } from '@angular/core';
 
 import { ApiService, TimingParams, EventParams, SimpleText } from './shared/api.service';
 import { TBOManager } from './shared/bo.service';
@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
     auto = true;
     wantUpdateEvent = true;
 
-    InputMsgText1 = "";
-    InputMsgText2 = "";
+    InputMsgText1 = '';
+    InputMsgText2 = '';
 
     race: number = 1;
     timepoint: number = 0;
@@ -42,9 +42,9 @@ export class AppComponent implements OnInit {
     ];
 
     resultCounter = 0;
-    errorFormatString = "Error in onKeyClick() - Error code: %s, URL: %s ";
+    errorFormatString = 'Error in onKeyClick() - Error code: %s, URL: %s ';
 
-    simpleText: string[] = ["abc", "def"];
+    simpleText: string[] = ['abc', 'def'];
 
     constructor(
         private apiService: ApiService,
@@ -63,15 +63,17 @@ export class AppComponent implements OnInit {
     onRaceChanged(value: number) {
         this.clearLabels();
         this.race = value;
-        if (this.timingTab)
+        if (this.timingTab) {
             this.timingTab.race = value;
+        }
     }
 
     onTimePointChanged(value: number) {
         this.clearLabels();
         this.timepoint = value;
-        if (this.timingTab)
+        if (this.timingTab) {
             this.timingTab.timepoint = value;
+        }
     }
 
     onBibChanged(value: number) {
@@ -108,18 +110,21 @@ export class AppComponent implements OnInit {
 
     onTimeReceivedLocal(tm: TimingParams) {
 
-        this.InputMsgText1 = "";
-        this.InputMsgText2 = "";
+        this.InputMsgText1 = '';
+        this.InputMsgText2 = '';
 
         const cr = this.BOManager.BO.findBib(tm.bib);
-        if (!cr)
+        if (!cr) {
             return;
+        }
         const raceEntry = cr.Race[tm.race];
-        if (!raceEntry)
+        if (!raceEntry) {
             return;
+        }
         const timeEntry = raceEntry.IT[tm.tp];
-        if (!timeEntry)
+        if (!timeEntry) {
             return;
+        }
 
         const time = this.getTimeString(2);
 
@@ -138,25 +143,24 @@ export class AppComponent implements OnInit {
         let te: string;
         let tr: string;
         if (mt > 0) {
-            tr = "FR.*.W" + tm.race + ".Bib" + tm.bib + ".QU" + " = " + qu;
+            tr = 'FR.*.W' + tm.race + '.Bib' + tm.bib + '.QU' + ' = ' + qu;
             te = tr;
             raceEntry.QU = qu;
-        }
-        else if (erase) {
-            te = "FR.*.W" + tm.race + ".Bib" + tm.bib + ".RV=0";
-            tr = "FR.*.W" + tm.race + ".Bib" + tm.bib + ".IT" + tm.tp + " = -1";
-            timeEntry.Time = "";
+        } else if (erase) {
+            te = 'FR.*.W' + tm.race + '.Bib' + tm.bib + '.RV=0';
+            tr = 'FR.*.W' + tm.race + '.Bib' + tm.bib + '.IT' + tm.tp + ' = -1';
+            timeEntry.Time = '';
         } else {
-            te = "FR.*.W" + tm.race + ".Bib" + tm.bib + ".RV=500";
-            tr = "FR.*.W" + tm.race + ".Bib" + tm.bib + ".IT" + tm.tp + " = " + time;
+            te = 'FR.*.W' + tm.race + '.Bib' + tm.bib + '.RV=500';
+            tr = 'FR.*.W' + tm.race + '.Bib' + tm.bib + '.IT' + tm.tp + ' = ' + time;
             timeEntry.Time = time;
         }
 
         if (te === tr) {
-            te = "";
+            te = '';
         }
         if (this.timepoint > 0) {
-            te = "";
+            te = '';
         }
 
         this.InputMsgText1 = tr;
@@ -169,27 +173,31 @@ export class AppComponent implements OnInit {
     }
 
     onTimeCancelled(tm: TimingParams) {
-        this.InputMsgText1 = "";
-        this.InputMsgText2 = "";
+        this.InputMsgText1 = '';
+        this.InputMsgText2 = '';
 
         const cr = this.BOManager.BO.findBib(tm.bib);
-        if (!cr)
+        if (!cr) {
             return;
+        }
         const raceEntry = cr.Race[tm.race];
-        if (!raceEntry)
+        if (!raceEntry) {
             return;
+        }
         const timeEntry = raceEntry.IT[tm.tp];
-        if (!timeEntry)
+        if (!timeEntry) {
             return;
+        }
 
         this.bib = tm.bib;
-        this.InputMsgText1 = timeEntry.Time || "no time";
+        this.InputMsgText1 = timeEntry.Time || 'no time';
         this.InputMsgText2 = raceEntry.QU;
     }
 
     updateFabs() {
-        if (this.timingTab)
+        if (this.timingTab) {
             this.timingTab.update();
+        }
     }
 
     /**
@@ -204,12 +212,15 @@ export class AppComponent implements OnInit {
         const ss = d.getSeconds();
         const t = d.getMilliseconds();
 
-        const shh = "" + hh;
-        const smm = mm < 10 ? "0" + mm : mm;
-        const sss = ss < 10 ? "0" + ss : ss;
-        let sms = "" + t;
-        if (t < 10) { sms = "00" + t; }
-        else if (t < 100) sms = "0" + t;
+        const shh = '' + hh;
+        const smm = mm < 10 ? '0' + mm : mm;
+        const sss = ss < 10 ? '0' + ss : ss;
+        let sms = '' + t;
+        if (t < 10) {
+            sms = '00' + t;
+        } else if (t < 100) {
+            sms = '0' + t;
+        }
 
         switch (digits) {
             case 1: sms = sms.substring(0, 1); break;
@@ -255,11 +266,11 @@ export class AppComponent implements OnInit {
     }
 
     clearLabels() {
-        this.time = "";
-        this.status = "";
+        this.time = '';
+        this.status = '';
 
-        this.InputMsgText1 = "InputMsgText1";
-        this.InputMsgText2 = "InputMsgText2";
+        this.InputMsgText1 = 'InputMsgText1';
+        this.InputMsgText2 = 'InputMsgText2';
 
         this.option = 0;
         this.resultCounter = 0;
@@ -279,7 +290,7 @@ export class AppComponent implements OnInit {
     }
 
     handleSuccess(data: string) {
-        //this.tableBtnClick();
+        // this.tableBtnClick();
     }
 
     jsonBtnClick() {

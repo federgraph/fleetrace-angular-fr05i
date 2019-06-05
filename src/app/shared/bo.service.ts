@@ -1,27 +1,27 @@
-﻿import { Injectable } from "@angular/core";
+﻿import { Injectable } from '@angular/core';
 import { TMsgParser2, TMsgType, TMsgInfo } from './bo.msg-parser-simple';
 
 export class TTimepointEntry {
-    Time: string = "";
+    Time: string = '';
     get TimePresent(): boolean {
-        return this.Time !== "";
+        return this.Time !== '';
     }
     clear() {
-        this.Time = "";
+        this.Time = '';
     }
 }
 
 export class TRaceEntry {
     Rank: number = 0;
     OTime: number = 0;
-    QU: string = "ok";
+    QU: string = 'ok';
 
     get IsOut(): boolean {
-        return this.QU !== "ok";
+        return this.QU !== 'ok';
     }
 
     get IsOK(): boolean {
-        return this.QU === "ok";
+        return this.QU === 'ok';
     }
 
     set RaceValue(value: string) {
@@ -39,15 +39,16 @@ export class TRaceEntry {
 
     clear() {
         this.OTime = 0;
-        this.QU = "ok";
-        for (let tp = 0; tp < this.IT.length; tp++) {
-            this.IT[tp].clear();
+        this.QU = 'ok';
+        for (const tpe of this.IT) {
+            tpe.clear();
         }
     }
 
     clearTimepoint(tp: number) {
-        if (tp >= 0 && tp < this.IT.length)
+        if (tp >= 0 && tp < this.IT.length) {
             this.IT[tp].clear();
+        }
     }
 }
 
@@ -65,7 +66,7 @@ export class TCollectionItem {
 }
 
 export class TBO {
-    Name: string = "Default Event";
+    Name: string = 'Default Event';
     StrictMode: boolean = true;
 
     CollectionItems: Array<TCollectionItem> = new Array<TCollectionItem>(8);
@@ -82,10 +83,15 @@ export class TBO {
     }
 
     checkDim(rc: number, tc: number, sc: number): boolean {
-        if (rc !== this.RaceCount) return false;
-        if (tc !== this.ITCount) return false;
-        if (sc !== this.StartlistCount) return false;
-
+        if (rc !== this.RaceCount) {
+            return false;
+        }
+        if (tc !== this.ITCount) {
+            return false;
+        }
+        if (sc !== this.StartlistCount) {
+            return false;
+        }
         return true;
     }
 
@@ -94,8 +100,7 @@ export class TBO {
     }
 
     clear() {
-        for (let i = 0; i < this.CollectionItems.length; i++) {
-            const cr = this.CollectionItems[i];
+        for (const cr of this.CollectionItems) {
             for (let r = 1; r < cr.Race.length; r++) {
                 cr.Race[r].clear();
             }
@@ -103,8 +108,7 @@ export class TBO {
     }
 
     clearRace(r: number) {
-        for (let i = 0; i < this.CollectionItems.length; i++) {
-            const cr = this.CollectionItems[i];
+        for (const cr of this.CollectionItems) {
             if (r >= 1 && r < cr.Race.length) {
                 cr.Race[r].clear();
             }
@@ -112,8 +116,7 @@ export class TBO {
     }
 
     clearTimepoint(r: number, tp: number) {
-        for (let i = 0; i < this.CollectionItems.length; i++) {
-            const cr = this.CollectionItems[i];
+        for (const cr of this.CollectionItems) {
             if (r >= 1 && r < cr.Race.length) {
                 cr.Race[r].clearTimepoint(tp);
             }
@@ -121,7 +124,7 @@ export class TBO {
     }
 
     handleQU(r: number, bib: number, value: string) {
-        //this.findBib(bib).Race[r].QU = value;
+        // this.findBib(bib).Race[r].QU = value;
         const cr = this.findBib(bib);
         if (cr) {
             if (r < cr.Race.length) {
@@ -134,7 +137,7 @@ export class TBO {
     }
 
     handleRank(r: number, bib: number, value: number) {
-        //this.findBib(bib).Race[r].Rank = value;
+        // this.findBib(bib).Race[r].Rank = value;
         const cr = this.findBib(bib);
         if (cr) {
             if (r < cr.Race.length) {
@@ -147,7 +150,7 @@ export class TBO {
     }
 
     handleRV(r: number, bib: number, value: string) {
-        //this.findBib(bib).Race[r].RaceValue = value;
+        // this.findBib(bib).Race[r].RaceValue = value;
         const cr = this.findBib(bib);
         if (cr) {
             if (r < cr.Race.length) {
@@ -160,7 +163,7 @@ export class TBO {
     }
 
     handleTime(r: number, bib: number, tp: number, value: string) {
-        //this.findBib(bib).Race[r].IT[tp].Time = value;
+        // this.findBib(bib).Race[r].IT[tp].Time = value;
         const cr = this.findBib(bib);
         if (cr) {
             if (r < cr.Race.length) {
@@ -186,18 +189,30 @@ export class TBOManager {
     MP: TMsgParser2;
 
     constructor() {
-        this.BO = new TBO;
+        this.BO = new TBO();
         this.MP = new TMsgParser2();
     }
 
     recreate(rc: number, tc: number, sc: number) {
-        if (rc < 1) rc = 1;
-        if (tc < 0) rc = 0;
-        if (sc < 2) sc = 2;
+        if (rc < 1) {
+            rc = 1;
+        }
+        if (tc < 0) {
+            rc = 0;
+        }
+        if (sc < 2) {
+            sc = 2;
+        }
 
-        if (rc > 20) rc = 20;
-        if (tc > 10) rc = 10;
-        if (sc > 120) sc = 120;
+        if (rc > 20) {
+            rc = 20;
+        }
+        if (tc > 10) {
+            rc = 10;
+        }
+        if (sc > 120) {
+            sc = 120;
+        }
 
         this.BO = new TBO(rc, tc, sc);
     }
@@ -207,40 +222,39 @@ export class TBOManager {
         let rc: number = 2;
         let tc: number = 0;
         let sc: number = 2;
-        let en: string = "Test Event";
+        let en: string = 'Test Event';
         let im: boolean = true;
 
-        const ml: TMsgInfo[] = []; //Array<TMsgInfo> =  new Array<TMsgInfo>();
+        const ml: TMsgInfo[] = []; // Array<TMsgInfo> =  new Array<TMsgInfo>();
 
-        let s: string = "";
-        for (let i = 0; i < ML.length; i++) {
-            s = ML[i];
+        let s: string = '';
+        for (s of ML) {
             this.MP.parseLine(s);
             switch (this.MP.MsgType) {
-                case TMsgType.mtRaceCount: 
+                case TMsgType.mtRaceCount:
                     rc = this.MP.RaceCount;
                     break;
 
-                case TMsgType.mtITCount: 
+                case TMsgType.mtITCount:
                     tc = this.MP.ITCount;
                     break;
 
-                case TMsgType.mtStartlistCount: 
+                case TMsgType.mtStartlistCount:
                     sc = this.MP.StartlistCount;
                     break;
 
                 case TMsgType.mtNone:
                     break;
 
-                case TMsgType.mtEventName: 
+                case TMsgType.mtEventName:
                     en = this.MP.EventName;
                     break;
 
-                case TMsgType.mtInputMode: 
+                case TMsgType.mtInputMode:
                     im = this.MP.InputMode;
                     break;
 
-                default: 
+                default:
                     ml.push(this.MP.Info);
                     break;
             }
@@ -248,8 +262,7 @@ export class TBOManager {
 
         if (!this.BO.checkDim(rc, tc, sc)) {
             this.recreate(rc, tc, sc);
-        }
-        else {
+        } else {
             this.BO.clear();
         }
 
@@ -274,7 +287,7 @@ export class TBOManager {
                     break;
 
                 case TMsgType.mtRV:
-                    //do nothing
+                    // do nothing
                     break;
             }
 

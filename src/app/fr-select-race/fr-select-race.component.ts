@@ -9,15 +9,15 @@ export class FrSelectRaceComponent {
 
   numbers: Array<number> = [];
 
-  _raceCount: number = 1;
+  fRaceCount: number = 1;
 
-  get raceCount(): number { return this._raceCount; } 
+  get raceCount(): number { return this.fRaceCount; }
 
   @Input() set raceCount(value: number) {
-    this._raceCount = value;
+    this.fRaceCount = value;
     this.update();
   }
-  
+
   @Output() raceChanged: EventEmitter<number> = new EventEmitter();
 
   constructor() { }

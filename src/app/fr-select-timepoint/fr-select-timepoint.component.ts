@@ -9,20 +9,20 @@ export class FrSelectTimepointComponent {
 
   numbers: Array<number> = [];
 
-  _itCount: number = 1;
+  fITCount: number = 1;
 
-  get itCount(): number { 
-    return this._itCount;
+  get itCount(): number {
+    return this.fITCount;
   }
 
   @Input() set itCount(value: number) {
-    this._itCount = value;
+    this.fITCount = value;
     this.update();
   }
 
   @Output() timePointChanged: EventEmitter<number> = new EventEmitter();
 
- constructor () { 
+ constructor() {
     this.update();
   }
 
