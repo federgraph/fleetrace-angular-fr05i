@@ -48,19 +48,19 @@ export class AppComponent implements OnInit {
 
     constructor(
         private apiService: ApiService,
-        private BOManager: TBOManager) {
+        public BOManager: TBOManager) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.connectionControl.queryBtnClick();
     }
 
-    onParamsChanged(value: EventParams) {
+    onParamsChanged(value: EventParams): void {
         this.BOManager.recreate(value.raceCount, value.itCount, value.startlistCount);
         this.reset();
     }
 
-    onRaceChanged(value: number) {
+    onRaceChanged(value: number): void {
         this.clearLabels();
         this.race = value;
         if (this.timingTab) {
@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
         }
     }
 
-    onTimePointChanged(value: number) {
+    onTimePointChanged(value: number): void {
         this.clearLabels();
         this.timepoint = value;
         if (this.timingTab) {
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
         }
     }
 
-    onBibChanged(value: number) {
+    onBibChanged(value: number): void {
         const t: TimingParams = {
             race: this.race,
             tp: this.timepoint,
@@ -85,16 +85,16 @@ export class AppComponent implements OnInit {
         this.onTimeReceived(t);
     }
 
-    onResultAvailable(value: string) {
+    onResultAvailable(value: string): void {
         this.resultCounter++;
     }
 
-    onTimeReceived(tm: TimingParams) {
+    onTimeReceived(tm: TimingParams): void {
         this.triggerTimingEvent(tm);
         this.onTimeReceivedLocal(tm);
     }
 
-    triggerTimingEvent(tm: TimingParams) {
+    triggerTimingEvent(tm: TimingParams): void {
 
         if (this.connectionControl.getConnected()) {
             if (this.auto) {
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
         }
     }
 
-    onTimeReceivedLocal(tm: TimingParams) {
+    onTimeReceivedLocal(tm: TimingParams): void {
 
         this.InputMsgText1 = '';
         this.InputMsgText2 = '';
@@ -172,7 +172,7 @@ export class AppComponent implements OnInit {
         this.status = raceEntry.QU;
     }
 
-    onTimeCancelled(tm: TimingParams) {
+    onTimeCancelled(tm: TimingParams): void {
         this.InputMsgText1 = '';
         this.InputMsgText2 = '';
 
@@ -194,7 +194,7 @@ export class AppComponent implements OnInit {
         this.InputMsgText2 = raceEntry.QU;
     }
 
-    updateFabs() {
+    updateFabs(): void {
         if (this.timingTab) {
             this.timingTab.update();
         }
@@ -205,7 +205,7 @@ export class AppComponent implements OnInit {
      * (duplicate) of similar method TRaceBO.getTime()
      * @returns string in format HH:mm:ss.fff
      */
-    getTimeString(digits: number = 2) {
+    getTimeString(digits: number = 2): string {
         const d = new Date();
         const hh = d.getHours();
         const mm = d.getMinutes();
@@ -231,17 +231,17 @@ export class AppComponent implements OnInit {
         return tm;
     }
 
-    triggerBtnClick() {
+    triggerBtnClick(): void {
         this.onBibChanged(this.bib);
         this.updateFabs();
     }
 
-    clearBtnClick() {
+    clearBtnClick(): void {
         this.BOManager.BO.clear();
         this.reset();
     }
 
-    resetBtnClick() {
+    resetBtnClick(): void {
         const ep = new EventParams();
         ep.raceCount = 2;
         ep.itCount = 2;
@@ -249,7 +249,7 @@ export class AppComponent implements OnInit {
         this.onParamsChanged(ep);
     }
 
-    smallBtnClick() {
+    smallBtnClick(): void {
         const ep = new EventParams();
         ep.raceCount = 1;
         ep.itCount = 0;
@@ -257,7 +257,7 @@ export class AppComponent implements OnInit {
         this.onParamsChanged(ep);
     }
 
-    bigBtnClick() {
+    bigBtnClick(): void {
         const ep = new EventParams();
         ep.raceCount = 3;
         ep.itCount = 3;
@@ -265,7 +265,7 @@ export class AppComponent implements OnInit {
         this.onParamsChanged(ep);
     }
 
-    clearLabels() {
+    clearLabels(): void {
         this.time = '';
         this.status = '';
 
@@ -276,7 +276,7 @@ export class AppComponent implements OnInit {
         this.resultCounter = 0;
     }
 
-    reset() {
+    reset(): void {
         this.clearLabels();
         this.race = 1;
         this.timepoint = 0;
@@ -284,23 +284,23 @@ export class AppComponent implements OnInit {
         this.updateFabs();
     }
 
-    handleError(err: any) {
+    handleError(err: any): void {
         this.connectionControl.setConnected(false);
         console.log(this.errorFormatString, err.status, err.url);
     }
 
-    handleSuccess(data: string) {
+    handleSuccess(data: string): void {
         // this.tableBtnClick();
     }
 
-    jsonBtnClick() {
+    jsonBtnClick(): void {
         this.apiService.getSimpleText().subscribe(
             (data: SimpleText) => this.onSimpleDataAvailable(data.EventDataSimpleText),
             (err: any) => console.log(this.errorFormatString, err.status, err.url)
         );
     }
 
-    onSimpleDataAvailable(st: string[]) {
+    onSimpleDataAvailable(st: string[]): void {
         this.simpleText = st;
         this.BOManager.processBackup(st);
         this.updateFabs();

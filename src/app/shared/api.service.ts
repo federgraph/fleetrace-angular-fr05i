@@ -671,7 +671,7 @@ export class ApiService {
     return this.http.get(`/api/widget/do-timing-event-quick?race=${race}&it=${it}&bib=${bib}`, {responseType: 'text'});
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);

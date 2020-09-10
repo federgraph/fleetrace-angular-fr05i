@@ -22,11 +22,11 @@ export class FrSelectRaceComponent {
 
   constructor() { }
 
-  click(value: number) {
+  click(value: number): void {
     this.raceChanged.emit(value);
   }
 
-  update() {
+  update(): void {
     // generate [0, 1, ... , raceCount-2]
     let t = Array.from(Array(this.raceCount - 1).keys());
     // map to [2, 3, ... , raceCount]

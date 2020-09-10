@@ -70,7 +70,7 @@ export class TMsgParser2 {
 
     ErrorMsg: string;
 
-    resetGroups() {
+    resetGroups(): void {
         this.gc = 0;
         this.g1 = 'g1';
         this.g2 = 'g2';
@@ -78,7 +78,7 @@ export class TMsgParser2 {
         this.g4 = 'g4';
     }
 
-    resetVars() {
+    resetVars(): void {
         this.ErrorMsg = '';
         this.MsgType = TMsgType.mtNone;
 
@@ -99,11 +99,11 @@ export class TMsgParser2 {
         this.sValue = '';
     }
 
-    test(s: string) {
+    test(s: string): void {
 
     }
 
-    initTestData(ML: string[]) {
+    initTestData(ML: string[]): void {
         ML = [];
         ML.push('DP.RaceCount = 3');
         ML.push('DP.ITCount = 2');
@@ -173,7 +173,7 @@ export class TMsgParser2 {
         return this.genOne(this.MsgType);
     }
 
-    genAll(ML: string[]) {
+    genAll(ML: string[]): void {
         for (let mt = TMsgType.mtRaceCount; mt < TMsgType.mtTime; mt++) {
             ML.push(this.genOne(mt));
         }

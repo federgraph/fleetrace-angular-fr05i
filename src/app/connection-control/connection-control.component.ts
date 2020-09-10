@@ -35,18 +35,18 @@ export class ConnectionControlComponent {
         this.updateLEDColor();
     }
 
-    handleError(err: any) {
+    handleError(err: any): void {
         this.setConnected(false);
         this.errorMsg = `status: ${err.status} url: ${err.url}`;
     }
 
-    updateFlash(s: string) {
+    updateFlash(s: string): void {
         this.dataMsg = '';
         this.errorMsg = '';
         this.flashMsg = s;
     }
 
-    connectBtnClick() {
+    connectBtnClick(): void {
         this.led = AmpelColor.white;
         this.updateFlash('connect');
         this.apiService.inputWireConnect().subscribe(
@@ -63,7 +63,7 @@ export class ConnectionControlComponent {
         );
     }
 
-    disconnectBtnClick() {
+    disconnectBtnClick(): void {
         this.led = AmpelColor.white;
         this.updateFlash('disconnect');
         this.apiService.inputWireDisconnect().subscribe(
@@ -80,7 +80,7 @@ export class ConnectionControlComponent {
         );
     }
 
-    queryBtnClick() {
+    queryBtnClick(): void {
         this.updateFlash('query');
         this.apiService.queryParams().subscribe(
             (data) => {
@@ -99,7 +99,7 @@ export class ConnectionControlComponent {
         );
     }
 
-    clearBtnClick() {
+    clearBtnClick(): void {
         this.updateFlash('clear');
         this.apiService.manageClear().subscribe(
             (res) => {
@@ -113,7 +113,7 @@ export class ConnectionControlComponent {
         );
     }
 
-    testBtnClick() {
+    testBtnClick(): void {
         this.updateFlash('test');
         this.apiService.getConnectionStatus().subscribe(
             (data) => {
@@ -145,12 +145,12 @@ export class ConnectionControlComponent {
         return this.isConnected;
     }
 
-    setConnected(value: boolean) {
+    setConnected(value: boolean): void {
         this.isConnected = value;
         this.updateLEDColor();
     }
 
-    logBtnClick() {
+    logBtnClick(): void {
         if (this.dataMsg !== '') {
             console.log('dataMsg = ' + this.dataMsg);
         }
@@ -162,7 +162,7 @@ export class ConnectionControlComponent {
         }
     }
 
-    superClear() {
+    superClear(): void {
         this.clearBtnClick();
         this.queryBtnClick();
     }

@@ -40,11 +40,11 @@ export class TimingButtonsComponent implements OnInit {
     constructor(public BOManager: TBOManager) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.update();
     }
 
-    clickBiw(bow: number) {
+    clickBiw(bow: number): void {
         const t: TimingParams = {
             race: this.race,
             tp: this.timepoint,
@@ -54,7 +54,7 @@ export class TimingButtonsComponent implements OnInit {
         this.timeCancelled.emit(t);
     }
 
-    clickBow(bow: number) {
+    clickBow(bow: number): void {
         const t: TimingParams = {
             race: this.race,
             tp: this.timepoint,
@@ -83,27 +83,27 @@ export class TimingButtonsComponent implements OnInit {
         }
     }
 
-    hide() {
+    hide(): void {
         this.autoShow = false;
         this.clear();
     }
 
-    show() {
+    show(): void {
         this.autoShow = true;
         this.fill();
     }
 
-    clear() {
+    clear(): void {
         this.Bows = [];
         this.BowTupples = [];
     }
 
-    fill() {
+    fill(): void {
         this.Bows = this.Bibs.slice();
         this.buildBowTupples();
     }
 
-    toggle() {
+    toggle(): void {
         if (this.Bows.length > 0) {
             this.hide();
         } else {
@@ -111,7 +111,7 @@ export class TimingButtonsComponent implements OnInit {
         }
     }
 
-    update() {
+    update(): void {
         this.updateFromTimePoint();
         this.filterOutFinishedBibs();
         this.countShown = this.Bibs.length;
@@ -122,7 +122,7 @@ export class TimingButtonsComponent implements OnInit {
         }
     }
 
-    updateFromEvent() {
+    updateFromEvent(): void {
         const ba: Array<number> = [];
 
         const r = this.check_r(this.race);
@@ -146,7 +146,7 @@ export class TimingButtonsComponent implements OnInit {
      * these bibs (all) should not be available for race timing input,
      * since the entry has already completed that race or is Out.
      */
-    filterOutFinishedBibs() {
+    filterOutFinishedBibs(): void {
         const ba: Array<number> = [];
 
         const r = this.check_r(this.fRace);
@@ -167,7 +167,7 @@ export class TimingButtonsComponent implements OnInit {
     /**
      * Used in FR01 (event only app, there is no race timing included)
      */
-    updateFromTimePoint() {
+    updateFromTimePoint(): void {
         const ba: Array<number> = [];
         let r = this.fRace;
         const t = this.fTimepoint;
@@ -188,7 +188,7 @@ export class TimingButtonsComponent implements OnInit {
         this.Bibs = ba;
     }
 
-    buildBowTupples() {
+    buildBowTupples(): void {
         let bt: [number, boolean];
         const bts: Array<[number, boolean]> = [];
 

@@ -6,7 +6,7 @@ export class TTimepointEntry {
     get TimePresent(): boolean {
         return this.Time !== '';
     }
-    clear() {
+    clear(): void {
         this.Time = '';
     }
 }
@@ -37,7 +37,7 @@ export class TRaceEntry {
         }
     }
 
-    clear() {
+    clear(): void {
         this.OTime = 0;
         this.QU = 'ok';
         for (const tpe of this.IT) {
@@ -45,7 +45,7 @@ export class TRaceEntry {
         }
     }
 
-    clearTimepoint(tp: number) {
+    clearTimepoint(tp: number): void {
         if (tp >= 0 && tp < this.IT.length) {
             this.IT[tp].clear();
         }
@@ -99,7 +99,7 @@ export class TBO {
         return this.CollectionItems[bib - 1];
     }
 
-    clear() {
+    clear(): void {
         for (const cr of this.CollectionItems) {
             for (let r = 1; r < cr.Race.length; r++) {
                 cr.Race[r].clear();
@@ -107,7 +107,7 @@ export class TBO {
         }
     }
 
-    clearRace(r: number) {
+    clearRace(r: number): void {
         for (const cr of this.CollectionItems) {
             if (r >= 1 && r < cr.Race.length) {
                 cr.Race[r].clear();
@@ -115,7 +115,7 @@ export class TBO {
         }
     }
 
-    clearTimepoint(r: number, tp: number) {
+    clearTimepoint(r: number, tp: number): void {
         for (const cr of this.CollectionItems) {
             if (r >= 1 && r < cr.Race.length) {
                 cr.Race[r].clearTimepoint(tp);
@@ -123,7 +123,7 @@ export class TBO {
         }
     }
 
-    handleQU(r: number, bib: number, value: string) {
+    handleQU(r: number, bib: number, value: string): void {
         // this.findBib(bib).Race[r].QU = value;
         const cr = this.findBib(bib);
         if (cr) {
@@ -136,7 +136,7 @@ export class TBO {
         }
     }
 
-    handleRank(r: number, bib: number, value: number) {
+    handleRank(r: number, bib: number, value: number): void {
         // this.findBib(bib).Race[r].Rank = value;
         const cr = this.findBib(bib);
         if (cr) {
@@ -149,7 +149,7 @@ export class TBO {
         }
     }
 
-    handleRV(r: number, bib: number, value: string) {
+    handleRV(r: number, bib: number, value: string): void {
         // this.findBib(bib).Race[r].RaceValue = value;
         const cr = this.findBib(bib);
         if (cr) {
@@ -162,7 +162,7 @@ export class TBO {
         }
     }
 
-    handleTime(r: number, bib: number, tp: number, value: string) {
+    handleTime(r: number, bib: number, tp: number, value: string): void {
         // this.findBib(bib).Race[r].IT[tp].Time = value;
         const cr = this.findBib(bib);
         if (cr) {
@@ -193,7 +193,7 @@ export class TBOManager {
         this.MP = new TMsgParser2();
     }
 
-    recreate(rc: number, tc: number, sc: number) {
+    recreate(rc: number, tc: number, sc: number): void {
         if (rc < 1) {
             rc = 1;
         }
@@ -217,7 +217,7 @@ export class TBOManager {
         this.BO = new TBO(rc, tc, sc);
     }
 
-    processBackup(ML: string[]) {
+    processBackup(ML: string[]): void {
 
         let rc: number = 2;
         let tc: number = 0;

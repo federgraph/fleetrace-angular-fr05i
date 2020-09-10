@@ -26,11 +26,11 @@ export class FrSelectTimepointComponent {
     this.update();
   }
 
-  click(value: number) {
+  click(value: number): void {
     this.timePointChanged.emit(value);
   }
 
-  update() {
+  update(): void {
     this.numbers = Array.from(Array(this.itCount).keys());
   }
 
