@@ -1,23 +1,24 @@
-﻿import { Component, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Output, EventEmitter, inject } from '@angular/core';
 
 import { ApiService } from '../shared/api.service';
 import { EventParams } from '../shared/data-model';
+import { MaterialModule } from '../material/material.module';
 
 enum AmpelColor {
     white,
     red,
     yellow,
     green,
-    gray
+  gray,
 }
 
 @Component({
+  imports: [MaterialModule],
     selector: 'app-connection-control',
     templateUrl: './connection-control.component.html',
-    styleUrls: ['./connection-control.component.css']
+    styleUrls: ['./connection-control.component.css'],
 })
 export class ConnectionControlComponent {
-
     private isConnected = false;
     led: AmpelColor = AmpelColor.yellow;
     ledColor = 'red';
@@ -26,12 +27,13 @@ export class ConnectionControlComponent {
     errorMsg = '';
     flashMsg = '';
 
-    @Output() paramsChanged: EventEmitter<EventParams> = new EventEmitter();
+  @Output() paramsChanged = new EventEmitter<EventParams>();
 
     eventParams: EventParams = new EventParams();
 
-    constructor(
-        private apiService: ApiService) {
+  private apiService = inject(ApiService);
+
+  constructor() {
         this.updateLEDColor();
     }
 
@@ -59,7 +61,7 @@ export class ConnectionControlComponent {
                 this.handleError(err);
                 this.led = AmpelColor.gray;
                 this.setConnected(false);
-            }
+      },
         );
     }
 
@@ -76,7 +78,7 @@ export class ConnectionControlComponent {
                 this.handleError(err);
                 this.led = AmpelColor.gray;
                 this.setConnected(false);
-            }
+      },
         );
     }
 
@@ -95,7 +97,7 @@ export class ConnectionControlComponent {
                     this.dataMsg = 'please check response for querParams';
                 }
             },
-            err => this.handleError(err)
+      (err) => this.handleError(err),
         );
     }
 
@@ -109,7 +111,7 @@ export class ConnectionControlComponent {
                     this.dataMsg = 'please check response for clear';
                 }
             },
-            err => this.handleError(err)
+      (err) => this.handleError(err),
         );
     }
 
@@ -127,17 +129,27 @@ export class ConnectionControlComponent {
                     this.setConnected(false);
                 }
             },
-            (err) => this.handleError(err)
+      (err) => this.handleError(err),
         );
     }
 
     updateLEDColor(): void {
         switch (this.led) {
-            case AmpelColor.white: this.ledColor = 'white'; break;
-            case AmpelColor.red: this.ledColor = 'red'; break;
-            case AmpelColor.yellow: this.ledColor = 'yellow'; break;
-            case AmpelColor.green: this.ledColor = 'lime'; break;
-            default: this.ledColor = 'gray'; break;
+      case AmpelColor.white:
+        this.ledColor = 'white';
+        break;
+      case AmpelColor.red:
+        this.ledColor = 'red';
+        break;
+      case AmpelColor.yellow:
+        this.ledColor = 'yellow';
+        break;
+      case AmpelColor.green:
+        this.ledColor = 'lime';
+        break;
+      default:
+        this.ledColor = 'gray';
+        break;
         }
     }
 

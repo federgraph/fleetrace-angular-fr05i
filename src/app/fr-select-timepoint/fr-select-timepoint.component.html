@@ -1,7 +1,9 @@
 ﻿<div class="button-row">
   <button mat-button>IT</button>
-  <ng-container *ngFor="let number of numbers">
-    <button mat-raised-button (click)=click(number+1)>{{number+1}}</button>
-  </ng-container>
-  <button mat-raised-button (click)=click(0)>Z</button>
+  @for (number of numbers; track number) {
+    <ng-container>
+      <button mat-raised-button (click)="click(number + 1)">{{ number + 1 }}</button>
+    </ng-container>
+  }
+  <button mat-raised-button (click)="click(0)">Z</button>
 </div>

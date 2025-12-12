@@ -70,7 +70,7 @@ So that is why sometimes two messages will be generated and sent.
 ### 4. About SimpleText
 
 SimpleText is not used here. It can be removed.
-But you could add another button to download and process current event data from the server. See jsonBtnClick() in app.module.ts.
+But you could add another button to download and process current event data from the server. See jsonBtnClick() in app.component.ts.
 
 ## Build for Delphi or Node
 
@@ -91,5 +91,3 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Test version, works with FR69.
 
 To do: morph the layout so that it can be used from a phone size device.
-
-( Help is welcome. )

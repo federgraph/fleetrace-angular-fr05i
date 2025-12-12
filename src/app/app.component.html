@@ -1,35 +1,45 @@
 ﻿<p></p>
 
 <app-connection-control (paramsChanged)="onParamsChanged($event)"></app-connection-control>
-<app-fr-select-race [raceCount]="BOManager.BO.RaceCount" (raceChanged)="onRaceChanged($event)"></app-fr-select-race>
-<app-fr-select-timepoint [itCount]="BOManager.BO.ITCount" (timePointChanged)="onTimePointChanged($event)"></app-fr-select-timepoint>
+<app-fr-select-race
+  [raceCount]="BOManager.BO.RaceCount"
+  (raceChanged)="onRaceChanged($event)"
+></app-fr-select-race>
+<app-fr-select-timepoint
+  [itCount]="BOManager.BO.ITCount"
+  (timePointChanged)="onTimePointChanged($event)"
+></app-fr-select-timepoint>
 
-<h2>Race{{race}}.IT{{timepoint}}.Bib{{bib}}</h2>
+<h2>Race{{ race }}.IT{{ timepoint }}.Bib{{ bib }}</h2>
 
 <div class="radio-button-row">
-    <mat-radio-group [(ngModel)]="option">
-        <mat-radio-button class="radio-button" *ngFor="let o of options; let i = index" [value]=i>{{o}}</mat-radio-button>
-    </mat-radio-group>
+  <mat-radio-group ngModel="option">
+    @for (o of options; track o; let i = $index) {
+      <mat-radio-button class="radio-button" [value]="i">{{ o }}</mat-radio-button>
+    }
+  </mat-radio-group>
 </div>
 
 <p></p>
 
 <div class="button-row">
-    <button mat-raised-button (click)=triggerBtnClick()>trigger</button>
-    <button mat-raised-button (click)=clearBtnClick()>clear</button>
+  <button mat-raised-button (click)="triggerBtnClick()">trigger</button>
+  <button mat-raised-button (click)="clearBtnClick()">clear</button>
 </div>
 
-<app-timing-buttons #timingTab
-[race]="race"
-[timepoint]="timepoint"
-[auto]="auto"
-(timeCancelled)="onTimeCancelled($event)"
-(timeReceived)="onTimeReceived($event)"></app-timing-buttons>
+<app-timing-buttons
+  #timingTab
+  [race]="race"
+  [timepoint]="timepoint"
+  [auto]="auto"
+  (timeCancelled)="onTimeCancelled($event)"
+  (timeReceived)="onTimeReceived($event)"
+></app-timing-buttons>
 
-<p>{{resultCounter}}</p>
-<p>{{InputMsgText1}}</p>
-<p>{{InputMsgText2}}</p>
+<p>{{ resultCounter }}</p>
+<p>{{ InputMsgText1 }}</p>
+<p>{{ InputMsgText2 }}</p>
 
 <h2>SimpleText</h2>
 
-<pre>{{simpleText|json}}</pre>
+<pre>{{ simpleText | json }}</pre>
