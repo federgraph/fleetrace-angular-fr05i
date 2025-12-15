@@ -13,7 +13,7 @@
 <h2>Race{{ race }}.IT{{ timepoint }}.Bib{{ bib }}</h2>
 
 <div class="radio-button-row">
-  <mat-radio-group ngModel="option">
+  <mat-radio-group [(ngModel)]="option">
     @for (o of options; track o; let i = $index) {
       <mat-radio-button class="radio-button" [value]="i">{{ o }}</mat-radio-button>
     }

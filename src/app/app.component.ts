@@ -10,12 +10,13 @@ import { FrSelectTimepointComponent } from './fr-select-timepoint/fr-select-time
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { JsonPipe } from '@angular/common';
 import { MaterialModule } from './material/material.module';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   imports: [
+    FormsModule,
     MaterialModule,
-    ConnectionControlComponent,
-    TimingButtonsComponent,
+    ConnectionControlComponent, TimingButtonsComponent,
     FrSelectRaceComponent,
     FrSelectTimepointComponent,
     MatRadioButton,
