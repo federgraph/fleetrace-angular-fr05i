@@ -13,8 +13,8 @@ enum AmpelColor {
 }
 
 @Component({
-  imports: [MaterialModule],
     selector: 'app-connection-control',
+    imports: [MaterialModule],
     templateUrl: './connection-control.component.html',
     styleUrls: ['./connection-control.component.css'],
 })

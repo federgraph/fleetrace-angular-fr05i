@@ -7,29 +7,26 @@ import { ConnectionControlComponent } from './connection-control/connection-cont
 import { TimingButtonsComponent } from './timing-buttons/timing-buttons.component';
 import { FrSelectRaceComponent } from './fr-select-race/fr-select-race.component';
 import { FrSelectTimepointComponent } from './fr-select-timepoint/fr-select-timepoint.component';
-import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
-import { JsonPipe } from '@angular/common';
-import { MaterialModule } from './material/material.module';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from './material/material.module';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   imports: [
     FormsModule,
     MaterialModule,
-    ConnectionControlComponent, TimingButtonsComponent,
+    ConnectionControlComponent,
+    TimingButtonsComponent,
     FrSelectRaceComponent,
     FrSelectTimepointComponent,
-    MatRadioButton,
-    MatRadioGroup,
     JsonPipe,
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class App implements OnInit {
-  @ViewChild(ConnectionControlComponent, { static: true })
-  connectionControl!: ConnectionControlComponent;
+export class AppComponent implements OnInit {
+  @ViewChild(ConnectionControlComponent, { static: true }) connectionControl!: ConnectionControlComponent;
 
   @ViewChild('timingTab', { static: true })
   timingTab!: TimingButtonsComponent;
@@ -317,7 +314,7 @@ export class App implements OnInit {
   jsonBtnClick(): void {
     this.apiService.getSimpleText().subscribe({
       next: (data: SimpleText) => this.onSimpleDataAvailable(data.EventDataSimpleText),
-      error: (e: any) => console.log(this.errorFormatString, e.status, e.url)
+      error: (e: any) => console.log(this.errorFormatString, e.status, e.url),
     });
   }
 
